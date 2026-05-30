@@ -1,70 +1,59 @@
-# Customer Segmentation Project
+# Customer Segmentation — KMeans + Streamlit
 
-A smart and interactive web application for performing **Customer Segmentation** using **KMeans clustering**.  
-Built with **Streamlit**, this app allows users to upload their own customer dataset, analyze clusters dynamically, and explore rich insights through visual dashboards.
+A small data-analysis project that segments customers using **KMeans clustering** and exposes the trained model through an interactive **Streamlit** dashboard.
 
----
+> **Status:** Academic / learning project. Functional end-to-end but kept intentionally small in scope — see my pinned repositories for production-grade work.
 
-## 🚀 Features
+## What it does
 
-- 🔍 Upload your own dataset with custom mapping (coming soon)
-- 📊 Visualize and filter cluster segments in real-time
-- 📈 Radar chart of average metrics per segment
-- 📉 Compare features with interactive scatter plots
-- 📥 Bulk CSV upload and downloadable predictions
-- 🧠 AI-driven dynamic interpretation of each segment
+- Loads a customer dataset (`Age`, `Annual_Income`, `Spending_Score`, `Purchase_Frequency`, `Total_Spending`, `Family_Size`, `Gender`, `Marital_Status`).
+- Cleans the data, scales numeric features with a saved `StandardScaler`, and assigns each customer to a cluster using a pre-trained KMeans model.
+- Lets a user upload their own customer CSV through the Streamlit UI and explore the clusters with radar charts, scatter plots, and a pie-segmentation chart.
+- Exposes downloadable cluster assignments as a CSV.
 
----
+## Repository layout
 
-## 📁 Expected Columns
-
-Your uploaded dataset should contain the following columns:
-
+```text
+cust_segmentation/
+├── cust_segment.ipynb                  EDA + clustering notebook (training pipeline)
+├── dataset/
+│   ├── customer_data.csv               Raw input
+│   ├── cleaned_customers.csv           After preprocessing
+│   ├── df_scaled.csv                   Feature-scaled data
+│   └── sample_customer_upload.csv      Sample file for the Streamlit upload UI
+├── model/
+│   ├── customer_segment_model.joblib   Trained KMeans model
+│   ├── scaler.joblib                   Fitted StandardScaler
+│   └── streamlit_app.py                Streamlit dashboard
+├── output/                             Cluster visualizations (radar, scatter, pie, etc.)
+│   ├── clustered_customers.csv
+│   └── *.jpeg
+└── requirements.txt
 ```
-Age, Annual_Income, Spending_Score, Purchase_Frequency,
-Total_Spending, Family_Size, Gender, Marital_Status
-```
 
-If the dataset structure differs, upcoming versions will allow column mapping or retraining.
-
----
-
-## 🧪 How It Works
-
-1. Upload a customer dataset CSV.
-2. The app preprocesses the data and predicts a segment using a trained KMeans model.
-3. Explore visual insights like:
-   - Cluster distribution
-   - Feature trends
-   - Segment explanations
-
----
-
-## 📦 Tech Stack
-
-- `Python`
-- `Pandas`, `Scikit-learn`, `Matplotlib`, `Seaborn`
-- `Streamlit` for UI
-- `Joblib` for model persistence
-
----
-
-## 👨‍💻 Authors
-
-- **Devendra Gurav**
-- **Pankaj Bhandari**
-
----
-
-## 🏁 Run Locally
+## Run locally
 
 ```bash
-git clone https://github.com/devendra011396/cust_segmentation.git
-cd customer-segmentation
+git clone https://github.com/DevGurav/cust_segmentation.git
+cd cust_segmentation
 pip install -r requirements.txt
 streamlit run model/streamlit_app.py
 ```
 
----
+The app opens at `http://localhost:8501`. Upload the included `dataset/sample_customer_upload.csv` to see the dashboard work end-to-end.
 
-📫 For suggestions or improvements, feel free to reach out or fork the repo!
+## Tech stack
+
+- **Python** — pandas, scikit-learn (`KMeans`, `StandardScaler`), joblib
+- **Streamlit** — interactive UI
+- **matplotlib**, **seaborn** — charts in the notebook and output gallery
+
+## Notes
+
+- The notebook (`cust_segment.ipynb`) contains the EDA, feature engineering, KMeans cluster-count selection (elbow method), and model persistence.
+- The app currently assumes the input CSV uses the exact column names listed above. Flexible column mapping is a planned improvement.
+
+## Authors
+
+- **Devendra Gurav** ([@DevGurav](https://github.com/DevGurav))
+- **Pankaj Bhandari**
